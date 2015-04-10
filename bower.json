@@ -1,0 +1,20 @@
+{
+  "name": "ExampleProject",
+  "version": "0.0.0",
+  "authors": [
+    "btrichardt <btrichardt@cleversafe.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "normalize.css": "~3.0.2",
+    "jquery": "~2.1.3"
+  }
+}
