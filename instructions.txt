@@ -1722,4 +1722,36 @@ module.exports = function(grunt) {
 	grunt.registerTask('release', ['clean:build', 'clean:dest', 'less:release', 'copy:html', 'cssmin:release', 'copy:css', 'uglify:release', 'concat:release', 'copy:release', 'connect:server', 'watch']);
 };
 
-There we go! We have a pretty decent starting point for a new project. Next I will explain the differences and reimpliment this starting point with gulp, a stream based task runner.
+There we go! We have a pretty decent starting point for a new project. Lets add this project to GitHub. You will need to create an account on GitHub. You can read how to set up git at https://help.github.com/articles/set-up-git/ . After setting up git you will need to create a repository (or repo). There are instructions to create a new repo at https://help.github.com/articles/create-a-repo/ . Choose an easy name for the repo. In my example I will use FrontEndExampleProject which is arguably not very easy but I'm trying to be explicit. Create the project on the GitHub website and then open up a command prompt and navigate to your root project directory on your local machine. Run the following command to initalize your git project
+
+git init
+
+This will create a directory called .git/ in your current directory which has the the information that git needs to track the files in your local repository. Next you will need to set up the remote repo, which is the repo you just set up on GitHub. 
+
+git remote add origin https://github.com/user/repo.git
+
+You will need to replace user with your GitHub username and repo with the name of your repository name that you created during the create-a-repo step earlier. My username is kmfdm303 and the repo I created is called FrontEndExampleProject so I would run the following command.
+
+git remote add origin https://github.com/kmfdm303/FrontEndExampleProject.git
+
+You can check to see if the command ran by running 
+
+git remote -v
+
+which will show the alias name (origin) and the remote location for fetching and pushing. Next lets create a .gitignore file. This file will tell git that we do not want to add the files matching this patter into source control. You can create the git ignore file by typing 
+
+touch .gitignore
+
+or another command appropriate to the opperating system you are running. We want to exclude all of our staging files and external packages so add the following lines to the .gitignore file
+
+build/
+dest/
+node_modules/
+src/lib/
+
+now if you do a git status you will just see the files that we have worked on so do a git add on each of those files
+
+Next I will explain the differences and reimpliment this starting point with gulp, a stream based task runner.
+
+
+
