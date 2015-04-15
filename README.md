@@ -18,6 +18,7 @@ The basic structure is a follows
     * css
     * js
     * less
+    * lib
 
 The html files will be in the src directory and the css files, javascript files and less files will be in their own separate directories. External libraries loaded through bower will be in the lib directory under src. This directory will automatically be created by bower when you add libraries to your project. Just to be clear 'src' is where you put your source code for the project. 'build' is a temporary directory where files are put during the build process, and dest is the final output of the build process.
 
@@ -28,7 +29,7 @@ The project is going to use less. If you would like to use sass or some other la
 
 We will pluck out the appropriate .js files in the lib directory and concat them into the include.js file in the dest/lib directory (minifying the code when built for release. We will do the same for the files in the js directory, placing them in dest/js/script.js. 
 
-Once everything is built we are going to launch a web server and put a watch on the source files. When these source files change, we will automatically recompile the appropriate files and use livereload to automatically refresh the browser so the mere act of saving a file will cause the browser to automatically show update with the changes.
+Once everything is built we are going to launch a web server and put a watch on the source files. When these source files change, we will automatically recompile the appropriate files and use livereload to refresh the browser so the mere act of saving a file will cause the browser to update with the changes.
 
 Lets get started.
 
@@ -63,9 +64,10 @@ Hit ok and you are set. now if you open the package.json file you will see the f
 ```
 Now we just need to add grunt. Grunt is a task runner. It will do some tasks to automate the build process. You can read more about grunt at gruntjs.com. There are a lot of plugins for performing specific tasks and we will learn about some of them shortly. We are going to use a special command line argument with npm to make sure grunt gets added to package.json.
 ```
+npm install -g grunt-cli
 npm install grunt --save-dev
 ```
---save-dev will add grunt as a dependency to our project. The whole reason we want it as a dependency is that now, all we need to do is have the package.json file and if we type npm install, npm will automatically download all of the dependencies.  If you look at package.json now you will see a new section that lists out our project's dependencies.
+The frist line will install the grunt-cli globaly on your system. The second line will install grunt locally on in your project directory and the --save-dev will add grunt as a dependency to our project. The whole reason we want it as a dependency is that now, all we need to do is have the package.json file and if we type npm install, npm will automatically download all of the dependencies.  If you look at package.json now you will see a new section that lists out our project's dependencies.
 ######package.json
 ```json
   "devDependencies": {
@@ -78,7 +80,7 @@ Now, we are going to create a very simple grunt task to lint our code. Linting m
 ```
 npm install grunt-contrib-jshint --save-dev
 ```
-This will install jshint and add it to the dependencies in the package.json file. You can see a lit of plugins at gruntjs.com/plugins. I will be using the contrib plugins as they are all officially maintained by the grunt team. Now all we need to do is create a file called gruntfile.js in the root directory of our projects and place the following code in it.
+This will install jshint and add it to the dependencies in the package.json file. You can see a lit of available plugins at gruntjs.com/plugins. I will be using the contrib plugins as they are all officially maintained by the grunt team. Now all we need to do is create a file called gruntfile.js in the root directory of our projects and place the following code in it.
 ######gruntfile.js
 ```javascript
 /* jshint node: true */
@@ -96,7 +98,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('debug', ['jshint']);
 };
 ```
-We now have our fist grunt task. The grunt.initConfig section takes a json configuration file with the configuration parameters for that task. Since we are using an external module we need to add the grunt.loadNpmTasks() function. and finally to register our task we us grunt.registerTask. To run our grunt tasks type the following from the root directory of our project.
+We now have our fist grunt task. The grunt.initConfig section takes a json object with the configuration parameters for that task. Since we are using an external module we need to add the grunt.loadNpmTasks() function. and finally to register our task we us grunt.registerTask. To run our grunt tasks type the following at the command line from the root directory of our project.
 ```
 grunt debug
 ```
@@ -176,7 +178,7 @@ module.exports = function(grunt) {
 };
 ```
 
-Notice the different configurations for the clean command in the initConfig's json object. Cleaning the build directory can be accomplished by running the clean:build task. You can clean the build directory now at the command line by running 'grunt clean:build'. This added level allows a single plugin to run multiple different tasks. There is a other interesting change here as well in the files array under the less:debug and copy:css section. Grunt has 2 ways to map files, static mappings and dynamic mappings. A static mapping will take an array of source files and destination files where a dynamic mapping will search a directory for source files that match a pattern and put them in a destination directory with a specific file name. This snippet of code is taken from the gruntjs.com website
+Notice the different configurations for the clean command in the initConfig's json object. Cleaning the build directory can be accomplished by running the clean:build task. You can clean the build directory now at the command line by running 'grunt clean:build'. This added level allows a single plugin to run multiple different tasks. There is another interesting change here as well in the files array under the less:debug and copy:css section. Grunt has 2 ways to map files, static mappings and dynamic mappings. A static mapping will take an array of source files and destination files where a dynamic mapping will search a directory for source files that match a pattern and put them in a destination directory with a specific file name. This snippet of code is taken from the gruntjs.com website
 
 ######Static mapping example
 ```javascript
@@ -268,11 +270,11 @@ body {
 	color: @softBlack;	
 }
 ```
-This bit of code will define a few colors that we will use throughout our stylesheet. This can greatly simplify things making it less likely that you will forget to add a color somewhere or get the values wrong. Now that we have a few less files, lets run grunt and see what the output looks like.
+This bit of code will define a few colors that we will use throughout our stylesheet. This can greatly simplify things making it less likely that you will forget to add a color somewhere or get the values wrong. Now that we have a few .less files, lets run grunt and see what the output looks like.
 ```
 grunt debug
 ```
-This should produce 2 files in the dest/css directory called border.css which has the following content:
+This should produce 2 files in the dest/css directory with the following content:
 ######dest/css/border.css
 ```css
 .slightly-rounded {
