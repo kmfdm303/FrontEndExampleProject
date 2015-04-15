@@ -48,7 +48,7 @@ licence: MIT   <-- this is example code to share with the world so the MIT licen
 ```
 Hit ok and you are set. now if you open the package.json file you will see the following:
 ######package.json
-```javascript
+```json
 {
   "name": "ExampleProject",
   "version": "0.0.0",
@@ -67,7 +67,7 @@ npm install grunt --save-dev
 ```
 --save-dev will add grunt as a dependency to our project. The whole reason we want it as a dependency is that now, all we need to do is have the package.json file and if we type npm install, npm will automatically download all of the dependencies.  If you look at package.json now you will see a new section that lists out our project's dependencies.
 ######package.json
-```javascript
+```json
   "devDependencies": {
     "grunt": "^0.4.5"
   }
@@ -112,7 +112,7 @@ npm install grunt-contrib-copy --save-dev
 ```
 Your package.json file's dependencies section should look like this. Your version numbers may be a little different but don't worry, these number will constantly increment as they are active projects.
 ######package.json
-```javascript
+```json
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.6.0",
@@ -210,7 +210,7 @@ dynamic_mappings: {
 The less:debug files section says take the files in the src/less directory that match the pattern '\*\*/*.less'. The '*\*\*/' means any recursively search all subdirectories for '*.less' any file with and extension of .less. It will use those files as an input and compile those files into .css files in the build/css directory. The copy:css files section says copy any file in the build/css directory or its subdirectories with an extension of .css to the dest/css directory. So, the tl;dr of that is the less:debug task will compile the less files into the build/css directory and then the copy:css task will copy those css files to the dest/css directory. I know we could have just compiled the .less files to the dest/css directory but I am planning a head a little bit here for the concat and minify tasks. The only thing we are missing is a less file. create a file in the src/less directory called border.less and paste the following code in it
 
 ######src/less/border.less
-```css
+```less
 .border-radius(@value) {
 	-webkit-border-radius: @value;
 	-moz-border-radius:  @value;
@@ -229,7 +229,7 @@ The less:debug files section says take the files in the src/less directory that 
 This less code will define a function called border-radius which will output the border-radius code for each appropriate browser prefix. When this compiles it will create 2 css classes that will have the code to create 2px radius and 6px radius rounded corners. Create another file in the same directory called designElements.less and paste the following code in it.
 
 ######src/less/designElements.less
-```css
+```less
 @green: #96dd3c;
 @softGray: #888;
 @softBlack: #333;
