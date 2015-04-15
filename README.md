@@ -624,6 +624,7 @@ A couple of things to notice here, in the watch:less configuration, notice how t
 
 Alright, lets add normalize.css to the project. We can look up normalize.css and copy the file to the src/css directory or we can use bower to accomplish the same task. Bower is a lot like npm except it is focused on front-end development libraries. More information on bower can be found at http://bower.io. Installation is available through npm using the following command.
 ```
+npm install -g bower
 npm install bower --save-dev
 ```
 Bower requires an initialization similar to npm init so at the command line type
