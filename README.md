@@ -635,7 +635,7 @@ Accept all of the defaults and you will notice that a bower.json file is created
 ```
 echo {"directory" : "src/lib"} >> .bowerrc
 ```
-This will the json object and write it to a file called .bowerrc. Now that bower is configured, we can install our first bower package. on the bower website, you can search for packages. Type in 'normalize.css'. You should see the search results for a package named normalize.css. If you click on the search result, it should take you to the github project. There are installation instructions below for bower. Type the following line in at the command line to install normalize and update the bower.json file.
+This will write the json object to a file called .bowerrc. Now that bower is configured, we can install our first bower package. On the bower website, you can search for packages. Type in 'normalize.css'. You should see the search results for a package named normalize.css. If you click on the search result, it should take you to the github project. There are installation instructions below for bower. Type the following line in at the command line to install normalize and update the bower.json file.
 ```
 bower install normalize.css --save-dev
 ```
@@ -803,13 +803,16 @@ grunt debug
 </body>
 </html>
 ```
-When you save your changes, livereload will automatically cause your browser to refresh with the changes. Your font should be arial at this point based on normalize.css. We are starting to see a problem here. Every time we add a new css file we have to change the index.html file. If we have dozens of html files, we have to change each one. What we are going to do is concatenate each of the css files in to 1 file called style.css. This is an optimization that will help our page load faster because the browser doesn't have to open a connection and download several different files, it will only do it once. It will help us in the future too when we minify our code for the release task, but more on that later. 
+
+When you save your changes, livereload will automatically cause your browser to refresh with the changes. Your font should be arial at this point based on normalize.css. We are starting to see a problem here. Every time we add a new css file we have to change the index.html file. If we have dozens of html files, we have to change each one. What we are going to do is concatenate each of the css files in to a single file called style.css. This is an optimization that will help our page load faster because the browser doesn't have to open a connection and download several different files, it will only do it once. It will help us in the future too when we minify our code for the release task, but more on that later. 
 
 We are going to install concat via npm.
+
 ```
 npm install grunt-contrib-concat --save-dev
 ```
 and then modify to gruntfile.js to concat all of the files in the build/css directory. We will switch the normalize.css to copy over to the build directory. We are also going to create a custom process which will add a header before each of the css files so that while we are debugging our code, we can easily see which file we need to change. We are also going to add a new directory for some future planing. We are going to add a src/css directory so that if we end up with any css files, they will be included in the concat process.
+
 ######gruntfile.js
 ```javascript
 /* jshint node: true */
@@ -961,7 +964,7 @@ Lets add build tasks similar to the css tasks, except these will be for javascri
   * less
   * lib
   
-We are going to add a file called prettyNumber.js to the js directory which will just have a little function that I wrote a few years ago that will take a number in bytes and give it a proper label based on which counting system you use. Paste the following code into prettyNumber.js
+We are going to add a file called prettyNumber.js to the js directory which will just have a little function that I wrote a few years ago that will take a number in bytes and give it a proper label based on which counting system you use. Paste the following code into a new file in the src/js directory called prettyNumber.js
 
 ######src/js/prettyNumber.js
 ```javascript
@@ -1348,7 +1351,7 @@ module.exports = function(grunt) {
 </html>
 ```
 
-We can test out jquery by running a simple command in the browser's console. Each of the different browsers has a tool to allow you to enter commands in the javascript console. Firebug is a good tool for firefox, Chrome has a built in tool, Explorer has a javascript command line tool and you can Enable development mode in Safari to get a console. If you can't get a javascript console in your browser, just google it. Run the following command the javascript console.
+We can test out jquery by running a simple command in the browser's javascript console. Each of the different browsers has a tool to allow you to enter commands in the javascript console. Firebug is a good tool for firefox, Chrome has a built in tool, Explorer has a javascript command line tool and you can Enable development mode in Safari to get a console as well. If you can't get a javascript console in your browser, just google it, it's there. Run the following command the javascript console.
 ```
 $(".titleBar").css("background-color", "#ff9933");
 ```
@@ -1362,7 +1365,7 @@ This function takes a number of bytes and returns a formatted number based on wh
 ```
 prettyNumber(82728347, "iec");  // returns 78.90 MiB
 ```
-Things are looking pretty good at this point, one thing we are going to need to do is set up another task called release. This task will minify our javascript code down to one file so that it will be most efficiently transferred. A lot of hosting services will charge you based on traffic. It would be silly to just throw away money so we minify our css too. We are going to keep the file headers after each file is minified so that we will at least be able to see what file has a javascript error in production. We will also have a visual cue at to which files are included. Some may argue that this step isn't necessary but it's only going to add a small amount to the size of our final file. So the first step is to download uglify (the javascript minifier) and cssmin (the css minifier).
+Things are looking pretty good at this point, one thing we are going to need to do is set up another task called 'release'. This task will minify our javascript code down to one file so that it will be most efficiently transferred. A lot of hosting services will charge you based on traffic. It would be silly to just throw away money so we minify our css too. We are going to keep the file headers after each file is minified so that we will at least be able to see what file has a javascript error in production if a problem comes up. We will also have a visual cue at to which files are included. Some may argue that this step isn't necessary but it's only going to add a small amount to the size of our final file. So the first step is to download uglify (the javascript minifier) and cssmin (the css minifier).
 ```
 npm install grunt-contrib-uglify --save-dev
 npm install grunt-contrib-cssmin --save-dev
@@ -1763,23 +1766,23 @@ There we go! We have a pretty decent starting point for a new project. Lets add 
 ```
 git init
 ```
-This will create a directory called .git/ in your current directory which has the information that git needs to track the files in your local repository. Next you will need to set up the remote repo, which is the repo you just set up on GitHub. 
+This will create a directory called .git/ in your current directory which has the information that git needs to track the files in your local repository. Next you will need to set up the remote repo, which is the repo you just set up on GitHub. The pattern for adding the remote git repo is as follows, but you will need to make a slight change. 
 ```
-git remote add origin https://github.com/user/repo.git
+git remote add origin https://github.com/[user]/[repo].git
 ```
 You will need to replace **user** with your GitHub username and **repo** with the name of your repository name that you created during the create-a-repo step earlier. My username is kmfdm303 and the repo I created is called FrontEndExampleProject so I would run the following command.
 ```
 git remote add origin https://github.com/kmfdm303/FrontEndExampleProject.git
 ```
-You can check to see if the command ran by running 
+You can check to see if the command worked by running 
 ```
 git remote -v
 ```
-which will show the alias name (origin) and the remote location for fetching and pushing. Next lets create a .gitignore file. This file will tell git that we do not want to add the files matching this patter into source control. You can create the git ignore file by typing 
+which will show the alias name (origin) and the remote location for fetching and pushing. Next lets create a .gitignore file. This file will tell git that we do not want to add the files matching certain patterns into source control. You can create the git ignore file by typing..
 ```
 touch .gitignore
 ```
-or another command appropriate to the operating system you are running. We want to exclude all of our staging files and external packages so add the following lines to the .gitignore file
+..or another command appropriate to the operating system you are running. We want to exclude all of our staging files and external packages so add the following lines to the .gitignore file
 ```
 build/
 dest/
